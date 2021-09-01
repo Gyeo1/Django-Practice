@@ -129,3 +129,18 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+ADMINS=[
+    ('Sung Gyeol Kim','rlatjdruf99@naver.com'),
+]
+
+#이메일 with sendgrid!
+SENDGRID_API_KEY=os.environ.get("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") #.get 접근시 없으면 none을 반환
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+#send_mail(제목, 내용, 보내는사람, 수신자 리스트, smtp예외 발생, 인증정보,html메시지)로 구성됨
+WELCOME_EMAIL_SENDER="rlatjdruf99@naver.com"
