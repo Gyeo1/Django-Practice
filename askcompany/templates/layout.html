@@ -15,6 +15,13 @@
             crossorigin="anonymous"></script>
     </head>
     <body>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{messages.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="border-bottom mb-3">
     <div class="container">
         <div class="row">
@@ -45,9 +52,9 @@
     
         {% block content %}
         {% endblock %}
-    <div class="border-top">
+    <div class="border-top" >
     <div class="container">
-    <footer class="pt-4 my-md-5 pt-md-5 ">
+    <footer class="pt-4 my-md-10 pt-md-10 ">
     <div class="row">
       <div class="col-12 col-md">
         {% comment %} <img class="mb-2" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19"> {% endcomment %}
