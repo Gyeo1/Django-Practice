@@ -9,8 +9,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',TemplateView.as_view(template_name='root.html'), name='root'),
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+    path('accounts/',include('accounts.urls')),
+]
 if settings.DEBUG: #만약 디버그 모드이면 작동, 미디어 파일에대한 스태틱 server 구현.
     
     urlpatterns+=[
