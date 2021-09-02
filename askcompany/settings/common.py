@@ -135,10 +135,10 @@ ADMINS=[
 ]
 
 #이메일 with sendgrid!
-SENDGRID_API_KEY=os.environ.get("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") #.get 접근시 없으면 none을 반환
+SENDGRID_API_KEY=os.environ.get("SENDGRID_API_KEY") #.get 접근시 없으면 none을 반환
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_USER = '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' # this is exactly the value 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

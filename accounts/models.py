@@ -19,4 +19,4 @@ class User(AbstractUser):
             "user":self,
         })
         sender_email=settings.WELCOME_EMAIL_SENDER
-        send_mail(subject ,content ,sender_email, [self.email], fail_silently=False )
+        send_mail(subject ,content ,sender_email, [self.email], fail_silently=False )#send_mail
