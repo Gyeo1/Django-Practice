@@ -1,5 +1,6 @@
 from re import template
-from accounts.forms import SignupForm
+from django.contrib.auth.decorators import login_required
+from accounts.forms import SignupForm,ProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
@@ -43,3 +44,15 @@ login=LoginView.as_view(template_name="accounts/login_form.html") #settings에 L
 def logout(request):
     messages.success(request,"로그아웃 되셨습니다.")
     return logout_then_login(request)#로그아웃 하자마자 로그인 페이지로 보낸다!
+
+@login_required
+def profile_edit(request): #프로필 
+    if request.method=='POST':
+        form= ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"프로필을 수정/저장했습니다")
+            return redirect("profile_edit")
+    else:
+        form=ProfileForm(instance=request.user) #만약 GET이라면 새로 빈걸 만들지 말고 user를 보낸다
+    return render(request,"accounts/profile_edit_form.html",{'form':form})
