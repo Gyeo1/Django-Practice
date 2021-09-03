@@ -34,4 +34,4 @@ class SignupForm(UserCreationForm):#로그인을 구현하는 formd을 제공해
 class ProfileForm(forms.ModelForm):
     class Meta:
         model=User
-        fields=['last_name','first_name','website_url','bio','phone_number','gender'] #Model에서 지원할 영역
+        fields=['avatar','last_name','first_name','website_url','bio','phone_number','gender'] #Model에서 지원할 영역

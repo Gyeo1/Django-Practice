@@ -1,9 +1,10 @@
-from re import A
+from re import A, T
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser #장고의 추상화 유저 모델 지원!
 from django.core.mail import send_mail
 from django.db.models.enums import Choices
+from django.db.models.fields import BLANK_CHOICE_DASH
 from django.db.models.lookups import Regex
 from django.template.loader import render_to_string
 from django.core.validators import RegexValidator
@@ -21,7 +22,11 @@ class User(AbstractUser):
                                     validators=[RegexValidator(r'^010-?[0-9]\d{3}-?\d{4}$')])
      #정규 표현식의 유효성 검증 -?은 -가 나올수도 있다를 의미하고 [0-9]까지의 숫자가 3번, 4번 나온다란 의미다
     gender=models.CharField(max_length=1, choices=GenderChoices.choices,blank=True )
-
+    avatar=models.ImageField(blank=True, upload_to="accounts/avatar/%Y/%m/%d"
+                    ,help_text='지정된 px 크기로 업로드 해주세요') #년/월/일로 구분해서 업로드 한다.
+    #ImageField를 사용하면 반드시 HTML의 form에 multipart/form-data가 있는지 확인!+View단에서도 request.File 필요
+    
+    
     # def send_welcome_email(self):
     #     subject=render_to_string("accounts/welcome_email_subject.txt",{
     #         "user":self,
