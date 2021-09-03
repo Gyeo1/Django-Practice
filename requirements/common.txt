@@ -1,5 +1,3 @@
-django==3.0.0
+django~=3.0.0
 django-bootstrap4
-
-pillow
 django-pydenticon
