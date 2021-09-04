@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.db.models.enums import Choices
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.db.models.lookups import Regex
+from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 from django.core.validators import RegexValidator
 # Create your models here.
@@ -19,7 +20,13 @@ class User(AbstractUser):
     @property #name으로 접근시 발동
     def name(self):
         return f"{self.first_name} {self.first_name}"
-    
+    @property
+    def avatar_url(self): #아바타 호출시 아바타가 없으면 pydenticon 랜덤 이미지 배포
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return resolve_url("pydneticon_image",self.username)
+
     website_url=models.URLField(blank=True)
     bio=models.TextField(blank=True)
     phone_number=models.CharField(max_length=13,blank=True,
