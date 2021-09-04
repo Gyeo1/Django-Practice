@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from django.contrib import messages
-from .models import Tag
+from .models import Post, Tag
 # Create your views here.
 @login_required
 def post_new(request):
@@ -17,9 +17,15 @@ def post_new(request):
             post.tag_set.add(*post.extract_tag_list()) #태그 리스트 가져오는 함수를 tag_set에 추가
 
             messages.success(request,"포스팅을 저장 했습니다.")
-            return redirect('/') #TODO: get_absolute_url을 나중에 활용한다.
+            return redirect(post) 
     else:#GET요청 일 경우
         form=PostForm()
     return render(request,"instagram/post_form.html",{
         'form':form,
+    })
+
+def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번째 포스팅?
+    post=get_object_or_404(Post,pk=pk)
+    return render(request,"instagram/post_detail.html",{
+        "post":post
     })

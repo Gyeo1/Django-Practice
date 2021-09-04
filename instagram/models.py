@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf  import settings
+from django.urls import reverse
 import re
 # Create your models here.
 class Post(models.Model):
@@ -12,6 +13,7 @@ class Post(models.Model):
     def __str__(self):
         return self.caption
 
+
     def extract_tag_list(self): #이 함수는 tag의 모든 값을 뽑아오기 위해 사용한다.
         tag_name_list= re.findall(r"#([a-zA-Z\dㄱ-힇]+)", self.caption) #알파벳과 한글을 뽑아낸다
         tag_list=[]
@@ -19,6 +21,10 @@ class Post(models.Model):
             tag,_=Tag.objects.get_or_create(name=tag_name)#리스트 값을 tag란 이름의 값으로 만든다?
             tag_list.append(tag)#tag_list에 값 할당
         return tag_list
+
+    def get_absolute_url(self): #post_detail을 사용할때 강력히 추천되는 함수다
+        return reverse("instagram:post_detail", args=[self.pk])
+    
 
 class Tag(models.Model):
     name=models.CharField(max_length=50, unique=True)
