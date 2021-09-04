@@ -1,7 +1,7 @@
 from django.forms import fields
 from .models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import (UserCreationForm, PasswordChangeForm as AuthPasswordChangeForm)
 
 # class SignupForm(forms.ModelForm):#로그인을 구현하는 form이 필요
 #     class Meta:
@@ -35,3 +35,15 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model=User
         fields=['avatar','last_name','first_name','website_url','bio','phone_number','gender'] #Model에서 지원할 영역
+
+class PasswordChageForm(AuthPasswordChangeForm):
+    #PasswordChangeForm은 clean_password를 활용해 password가 같은지 검사
+    def clean_new_password2(self):
+        old_password=self.cleaned_data.get('old_password') #old password를 가져오고
+        new_password2=super().clean_new_password2()#부모클래스에서 new password를 받아온다.
+        #이때 new_password_2는 아랫쪽 칸에서 에러메시지발생 위로 올리고싶다면 1을 써야됨
+        #하지만 super즉 부모에서는 1이 없으므로 self의 cleaned_data에서 password_1을 받아온다 아래는 예시
+        #new_password1=self.cleaned_data.get('new_password1')
+        if old_password==new_password2:#비번이 같다면 에러 발생
+            raise forms.ValidationError("이전 암호화 동일합니다! 다르게 입력해 주세요")
+        return new_password2

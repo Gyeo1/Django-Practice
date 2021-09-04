@@ -1,13 +1,17 @@
 from re import template
 from django.contrib.auth.decorators import login_required
-from accounts.forms import SignupForm,ProfileForm
+# from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
+from accounts.forms import SignupForm,ProfileForm,PasswordChageForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.core.mail import send_mail,BadHeaderError
 from django.http import HttpResponse
-from django.contrib.auth.views import LoginView, logout_then_login #로그인 전용 CBV
+from django.contrib.auth.views import (LoginView, logout_then_login,
+        PasswordChangeView as AuthPasswordChangeView, )
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 def signup(request):
@@ -56,3 +60,17 @@ def profile_edit(request): #프로필
     else:
         form=ProfileForm(instance=request.user) #만약 GET이라면 새로 빈걸 만들지 말고 user를 보낸다
     return render(request,"accounts/profile_edit_form.html",{'form':form})
+
+
+
+#비밀 번호변경 view를 상속받아서 success_url을 지정해 준다.
+class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
+    form_class=PasswordChageForm #forms.py에서 받아옴
+    #아래처럼 하면old와 new 패스워드가 같아도 암호를 변경! 막기 위해선 passwordchangeForm의 상속 받아라
+    success_url=reverse_lazy("password_change")
+    template_name="accounts/password_change_form.html"
+    def form_valid(self, form):
+        messages.success(self.request,"암호를 변경 했습니다.")
+        return super().form_valid(form) 
+        
+password_change=PasswordChangeView.as_view()
