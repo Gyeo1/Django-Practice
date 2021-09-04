@@ -5,4 +5,7 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model=Post
-        fields='__all__'
+        fields=['photo','caption','location',] #해당 form이 책임을 질 Fields
+        widgets={
+            "caption":forms.Textarea,
+        }
