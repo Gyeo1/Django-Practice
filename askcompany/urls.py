@@ -12,9 +12,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',login_required(TemplateView.as_view(template_name='root.html')) , name='root'),
     path('accounts/',include('accounts.urls')),
+    path('',include('instagram.urls')),
     path('identicon/image/<path:data>', pydenticon_image, name='pydenticon_image'), 
     #저 주소 뒤에/아무 값을 입력하면 랜덤 아이콘이 나온다. 아이콘은 layout.html에서 처리를 해준다.
-
 ]
 if settings.DEBUG: #만약 디버그 모드이면 작동, 미디어 파일에대한 스태틱 server 구현.
     
