@@ -1,0 +1,15 @@
+{% extends 'instagram/layout.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="{{page_user.avatar_url}}" class="rounded-circle"/>
+                {{page_user.username}}
+                <a href="{% url 'profile_edit'%}"> Edit Profile</a>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}

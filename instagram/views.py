@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from .models import Post, Tag
 # Create your views here.
 @login_required
@@ -29,3 +30,11 @@ def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번
     return render(request,"instagram/post_detail.html",{
         "post":post
     })
+
+def user_page(request,username):
+    page_user=get_object_or_404(get_user_model(),username=username, is_active=True)
+    #user이름을 가져온다 실제이름 아님!
+    return render(request,"instagram/user_page.html",{
+        "page_user":page_user,
+    })
+    
