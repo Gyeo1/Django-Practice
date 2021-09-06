@@ -42,4 +42,9 @@ def user_page(request,username):
         "post_list":post_list,
         "post_list_count":post_list_count,
     })
-    
+
+@login_required
+def index(request):
+    return render(request,"instagram/index.html",{
+
+    })

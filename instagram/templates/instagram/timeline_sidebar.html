@@ -1,0 +1,34 @@
+<div class="d-flex p-2 mb-3"> {#d-flex로 붙어서 나오게 할 수 있다.#}
+    <div>      
+        <img src="{{user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
+    </div>
+
+    <div>
+        {{user.username}}<br/> {#줄바꿈을 br로 했다.#}
+        <small class="text-muted">{{user.name}}</small>
+    </div>
+</div>  
+
+<div class="card mb-3">
+    <div class="card-header text-muted">
+        Stories
+    </div>
+    <div class="card-body">
+        Stories from people you follow will show up here
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header text-muted">
+        Suggestions for you
+    </div>
+    <div class="card-body">
+        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
+        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
+        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
+        
+        
+
+        
+    </div>
+</div>
