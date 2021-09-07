@@ -1,12 +1,12 @@
 
 <div class="d-flex bd-highlight mb-3">
   <div class="p-2 bd-highlight">
-    <img src="{{friend_user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
+    <img src="{{suggested_user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
   </div>
   <div class="p-2 bd-highlight">
-    {{friend_user.username}}
+    {{suggested_user.username}}
   </div>
   <div class="ms-auto p-2 bd-highlight">
-    <a href="#">Follow</a>
+    <a href="{% url 'user_follow' suggested_user.username %}">Follow</a>
   </div>
 </div>

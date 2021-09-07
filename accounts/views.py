@@ -1,9 +1,10 @@
 from re import template
+import re
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse_lazy
 from accounts.forms import SignupForm,ProfileForm,PasswordChageForm
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.core.mail import send_mail,BadHeaderError
@@ -12,6 +13,7 @@ from django.contrib.auth.views import (LoginView, logout_then_login,
         PasswordChangeView as AuthPasswordChangeView, )
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import User
 # Create your views here.
 
 def signup(request):
@@ -74,3 +76,22 @@ class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
         return super().form_valid(form) 
         
 password_change=PasswordChangeView.as_view()
+
+
+#follow and unfollow 구현
+@login_required
+def user_follow(request,username):
+    follow_user=get_object_or_404(User,username=username, is_active=True)
+    request.user.following_set.add(follow_user)
+    #Request의 user가 follow_user를 follow하려 한다.
+    
+    messages.success(request,f"{follow_user}님을 팔로우 했습니다.")
+    redirect_url=request.META.get("HTTP_REFERER","root")#http Refere가 있으면 가져오고 없으면 root로 가라
+    return redirect(redirect_url) 
+
+@login_required
+def user_unfollow(request,username):
+    unfollow_user=get_object_or_404(User,username=username, is_active=True)
+    messages.success(request,f"{unfollow_user}님을 언팔로우 했습니다.")
+    redirect_url=request.META.get("HTTP_REFERER","root")#http Refere가 있으면 가져오고 없으면 root로 가라
+    return redirect(redirect_url) 

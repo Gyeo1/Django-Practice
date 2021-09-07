@@ -23,9 +23,10 @@
         Suggestions for you
     </div>
     <div class="card-body">
-        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
-        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
-        {% include "instagram/timeline_sidebar_user_follow.html" with friend_user=user %}
+        {% for suggested_user in suggested_user_list  %}
+            {% include "instagram/timeline_sidebar_user_follow.html"%}
+        {% endfor %}
+        
         
         
 

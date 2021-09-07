@@ -45,6 +45,8 @@ def user_page(request,username):
 
 @login_required
 def index(request):
+    suggested_user_list=get_user_model().objects.all().\
+        exclude(pk=request.user.pk)#현재 로그인 중인 유저는 제외
     return render(request,"instagram/index.html",{
-
+        "suggested_user_list":suggested_user_list,
     })

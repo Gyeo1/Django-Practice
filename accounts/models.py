@@ -17,6 +17,11 @@ class User(AbstractUser):
         Male="M" ,"Male" #앞의 M은 DB에 저장되는 값, Male은 실제 보여지는 값이다
         Female="F","Female"#번역을 생각할 시 _("Female") 이렇게 적어 주자
 
+    #아래 줄은 Timeline에 Follow 기능 추가를 위해 구현
+    follower_set=models.ManyToManyField("self", blank=True) #
+    following_set=models.ManyToManyField("self", blank=True) # for request.user
+
+
     website_url=models.URLField(blank=True)
     bio=models.TextField(blank=True)
     phone_number=models.CharField(max_length=13,blank=True,
