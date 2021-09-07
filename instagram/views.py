@@ -46,7 +46,11 @@ def user_page(request,username):
 @login_required
 def index(request):
     suggested_user_list=get_user_model().objects.all().\
-        exclude(pk=request.user.pk)#현재 로그인 중인 유저는 제외
+        exclude(pk=request.user.pk).\
+        exclude(pk__in=request.user.following_set.all())
+        #현재 로그인 중인 유저와 이미 포함된 유저 제외
+        #추천 친구 수를 제한하고 싶으면 [:3] 이렇게 표현 가능
+
     return render(request,"instagram/index.html",{
         "suggested_user_list":suggested_user_list,
     })

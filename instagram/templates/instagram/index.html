@@ -11,6 +11,8 @@
     <div class="row">
         <div class="col-sm-8">
             Timelines
+            <hr/>
+                {{user.following_set.all}}
         </div>
         {% comment %} 로그인 유저에 대한 내용 가져오기 By include{% endcomment %}
         <div class="col-sm-4">     
