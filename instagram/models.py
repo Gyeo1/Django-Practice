@@ -3,12 +3,21 @@ from django.conf  import settings
 from django.urls import reverse
 import re
 # Create your models here.
-class Post(models.Model):
+
+class BaseModel(models.Model):
+    created_at=models.DateTimeField(auto_now_add=True)#auto_now_add로 바로 작성되도록
+    updated_at=models.DateTimeField(auto_now=True)
+    class Meta:
+        abstract=True
+
+
+class Post(BaseModel):
     author=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)#작성자 모델과 1:N관계 N측에 작성
     photo=models.ImageField(upload_to="instgram/post/%Y/%m/%d") #필드에 대해 적용되는게 아닌 파일 저장시 활용
     caption=models.CharField(max_length=500)
     tag_set=models.ManyToManyField('Tag',blank=True)#아래 태그 클래스와 M2M필드 연관관계 
     location=models.CharField(max_length=100)
+    
 
     def __str__(self):
         return self.caption

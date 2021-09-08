@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .models import Post, Tag
 from django.db.models import Q
+from django.utils import timezone
+from datetime import timedelta
 # Create your views here.
 @login_required
 def post_new(request):
@@ -35,7 +37,7 @@ def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번
     })
 
 def user_page(request,username):
-    
+
     page_user=get_object_or_404(get_user_model(),username=username, is_active=True)
     #user이름을 가져온다 실제이름 아님!
 
@@ -60,9 +62,12 @@ def user_page(request,username):
 
 @login_required
 def index(request):
+    timesince=timezone.now()-timedelta(days=3) #최근시간에서 3일의 시간을뺌
     post_list=Post.objects.all().filter(
         Q(author=request.user)|
         Q(author__in=request.user.following_set.all()) 
+        ).filter(
+            created_at__lte=timesince #less than equal 
         )
     #포스트 리스트를 가져오는데 팔로잉된 유저들의 내용만 가져온다.
 
