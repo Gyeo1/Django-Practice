@@ -4,7 +4,9 @@
     <img src="{{suggested_user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
   </div>
   <div class="p-2 bd-highlight">
-    {{suggested_user.username}}
+    <a href="{% url 'instagram:user_page' suggested_user.username %}">
+        {{suggested_user.username}}
+    </a>
   </div>
   <div class="ms-auto p-2 bd-highlight">
     <a href="{% url 'user_follow' suggested_user.username %}">Follow</a>

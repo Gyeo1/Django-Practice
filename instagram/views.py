@@ -37,13 +37,24 @@ def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번
 def user_page(request,username):
     page_user=get_object_or_404(get_user_model(),username=username, is_active=True)
     #user이름을 가져온다 실제이름 아님!
+
     post_list=Post.objects.filter(author=page_user)
     post_list_count=post_list.count() #실제 DB의 count 쿼리를 주게된다. len은 메모리상에서 동작
     #len을 쓰면 포스팅 갯수가 많아지는 경우에 느리게 동작할 수 있다.
+
+
+    if request.user.is_authenticated:
+        is_follow=request.user.following_set.filter(pk=page_user.pk).exists() 
+        #로그인 됐을시 page_user가 followingset에 있는지 확인한다. 
+        #즉 Follow하고 있으면 True
+    else:
+        is_follow=False
+
     return render(request,"instagram/user_page.html",{
         "page_user":page_user,
         "post_list":post_list,
         "post_list_count":post_list_count,
+        "is_follow":is_follow,
     })
 
 @login_required
