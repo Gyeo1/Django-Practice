@@ -16,7 +16,7 @@
                 {% if is_follow %}
                     <a href="{% url 'user_unfollow' page_user.username %}">UnFollow</a>
                 {% else %}
-                    <a href="{% url 'user_follow' suggested_user.username %}">Follow</a>
+                    <a href="{% url 'user_follow' page_user.username %}">Follow</a>
                 {% endif %}
             
                 <hr/>

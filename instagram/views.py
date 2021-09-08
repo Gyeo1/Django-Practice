@@ -35,6 +35,7 @@ def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번
     })
 
 def user_page(request,username):
+    
     page_user=get_object_or_404(get_user_model(),username=username, is_active=True)
     #user이름을 가져온다 실제이름 아님!
 

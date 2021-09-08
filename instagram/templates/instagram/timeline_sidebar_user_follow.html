@@ -4,7 +4,8 @@
     <img src="{{suggested_user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
   </div>
   <div class="p-2 bd-highlight">
-    <a href="{% url 'instagram:user_page' suggested_user.username %}">
+    <a href="{% url 'instagram:user_page' suggested_user.username %}"> 
+    {#인스타그램의 user page로 가는데 오류?#}
         {{suggested_user.username}}
     </a>
   </div>
