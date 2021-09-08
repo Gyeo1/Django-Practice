@@ -1,9 +1,12 @@
+import django
+from django.contrib import auth
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .models import Post, Tag
+from django.db.models import Q
 # Create your views here.
 @login_required
 def post_new(request):
@@ -45,12 +48,19 @@ def user_page(request,username):
 
 @login_required
 def index(request):
+    post_list=Post.objects.all().filter(
+        Q(author=request.user)|
+        Q(author__in=request.user.following_set.all()) 
+        )
+    #포스트 리스트를 가져오는데 팔로잉된 유저들의 내용만 가져온다.
+
     suggested_user_list=get_user_model().objects.all().\
         exclude(pk=request.user.pk).\
         exclude(pk__in=request.user.following_set.all())
-        #현재 로그인 중인 유저와 이미 포함된 유저 제외
+        #현재 로그인 중인 유저와 이미 포함된 유저(pk__in) 제외
         #추천 친구 수를 제한하고 싶으면 [:3] 이렇게 표현 가능
 
     return render(request,"instagram/index.html",{
         "suggested_user_list":suggested_user_list,
+        "post_list":post_list,
     })
