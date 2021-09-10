@@ -33,8 +33,10 @@ def post_new(request):
 
 def post_detail(request,pk): #pk는 포스트의 number정도라 생각==>몇번째 포스팅?
     post=get_object_or_404(Post,pk=pk)
+    comment_form=CommentForm()#댓글 작성은 detail에 둠으로써 Ui상의 편리함 제공
     return render(request,"instagram/post_detail.html",{
-        "post":post
+        "post":post,
+        "comment_form":comment_form,
     })
 
 def user_page(request,username):
@@ -75,10 +77,11 @@ def index(request):
         exclude(pk__in=request.user.following_set.all())
         #현재 로그인 중인 유저와 이미 포함된 유저(pk__in) 제외
         #추천 친구 수를 제한하고 싶으면 [:3] 이렇게 표현 가능
-
+    comment_form=CommentForm()
     return render(request,"instagram/index.html",{
         "suggested_user_list":suggested_user_list,
         "post_list":post_list,
+        "comment_form":comment_form,
     })
 
 @login_required

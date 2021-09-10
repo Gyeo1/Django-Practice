@@ -1,4 +1,4 @@
-{% load instagram_tags humanize %}
+{% load bootstrap4 instagram_tags humanize %}
 
 <div class="card">
     <div class="card-header">
@@ -29,7 +29,7 @@
             {% for comment in post.comment_set.all %} {#댓글 보여주기#}
             <div class="comment">
                 <strong>{{comment.author}}</strong>:
-                {{comment.messages}}
+                {{comment.message}}
                 <small class='text-muted'>{{comment.created_at|naturaltime}}</small>
             </div>
             {% endfor %}
@@ -44,7 +44,7 @@
         <div>
             <a href="{{ post.get_absolute_url }}" class="text-muted">{#post_detail로 넘어감#}
             <small>
-                {{post.created_at|naturaltime}}
+                {{ post.created_at|naturaltime }}
             </small>
             </a>
         </div>
@@ -53,7 +53,15 @@
 
     <div class="card-footer">
     {#Comment 구현#}
-    <a href="{% url 'instagram:comment_new' post.pk %}">댓글 작성</a>
+        <form action="{% url 'instagram:comment_new' post.pk %}" method="POST" enctype="">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %} {#댓글 쓰기#}
+            <button class="btn btn-secondary btn-block mt-2">
+                댓글 작성
+            </button>
+        </form>
+        
+
     
     </div>
 </div>
