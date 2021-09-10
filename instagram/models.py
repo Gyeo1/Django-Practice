@@ -1,4 +1,5 @@
 from typing import Callable
+from django.core.checks import messages
 from django.db import models
 from django.conf  import settings
 from django.db.models.deletion import CASCADE
@@ -57,3 +58,9 @@ class Tag(models.Model):
 # class LikeUser(models.Model):#
 #     post=models.ForeignKey(Post, on_delete=models.CASCADE) #
 #     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+
+class Comment(BaseModel): #댓글 class
+    author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post=models.ForeignKey(Post,on_delete=models.CASCADE)
+    #CASCADE==> 관계가 있는 모델 삭제시 연결된 모델도 같이 삭제
+    messages=models.TextField()
