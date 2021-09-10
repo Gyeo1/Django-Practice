@@ -64,3 +64,6 @@ class Comment(BaseModel): #댓글 class
     post=models.ForeignKey(Post,on_delete=models.CASCADE)
     #CASCADE==> 관계가 있는 모델 삭제시 연결된 모델도 같이 삭제
     messages=models.TextField()
+    
+    class Meta:
+        ordering=['-id']

@@ -101,7 +101,7 @@ def post_dislike(request,pk):
     return redirect(redirect_url) 
 
 @login_required
-def commnet_new(requset,post_pk):
+def comment_new(requset,post_pk):
     post=get_object_or_404(Post,pk=post_pk)#미리 포스트에 대한 검증 실지
 
     if requset.method=="POST":
@@ -110,10 +110,11 @@ def commnet_new(requset,post_pk):
             comment=form.save(commit=False)#Why?==> fields가 messages만 있으므로 author와 post도 검증필요       
             comment.post= post
             comment.author=requset.user
+            comment.save()
             return redirect(comment.post)
     else:
         form=CommentForm()
-    return render(requset,"instagram/commnet_form.html",{
+    return render(requset,"instagram/comment_form.html",{
         "form":form,
     })
     

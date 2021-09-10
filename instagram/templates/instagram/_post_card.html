@@ -24,6 +24,17 @@
             {# 여기 까지가 like/dislike 구현 #}
         </div>
         <div>
+
+        <div class="comment-list mt-3 mb-3">
+            {% for comment in post.comment_set.all %} {#댓글 보여주기#}
+            <div class="comment">
+                <strong>{{comment.author}}</strong>:
+                {{comment.messages}}
+                <small class='text-muted'>{{comment.created_at|naturaltime}}</small>
+            </div>
+            {% endfor %}
+        </div>
+
             {% for tag in post.tag_set.all %}
             <span class="badge bg-primary"> {# badge-->bg #}
             #{{tag.name}}
@@ -39,9 +50,10 @@
         </div>
         
     </div>
+
     <div class="card-footer">
     {#Comment 구현#}
-    <a href="{% url 'instagram:commnet_new' post.pk %}">댓글 작성</a>
+    <a href="{% url 'instagram:comment_new' post.pk %}">댓글 작성</a>
     
     </div>
 </div>
