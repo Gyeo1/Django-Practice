@@ -19,14 +19,19 @@
     </div>
     <div class="card-footer">
         {% comment %} post.is_like_user(user)를 장고 Template에서 지원X, 따라서 custom Template사용! {% endcomment %}
-        {{post is_like_user:user}}
-
-        <a href="{% url "instagram:post_dislike" post.pk %}" style="color: inherit;">
+        {% if post|is_like_user:user  %}
+            <a href="{% url "instagram:post_dislike" post.pk %}" style="color: inherit;">
             <i class="fas fa-heart"></i> 
-        </a>
-        <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
+            </a>
+        {% else %}
+            <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
             <i class="far fa-heart"></i>
-        </a>
+            </a>
+        {% endif %}
+        
+
+        
+        
         
     </div>
 </div>
