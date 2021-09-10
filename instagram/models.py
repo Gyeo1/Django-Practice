@@ -42,6 +42,8 @@ class Post(BaseModel):
     def get_absolute_url(self): #post_detail을 사용할때 강력히 추천되는 함수다
         return reverse("instagram:post_detail", args=[self.pk])
     
+    def is_like_user(request,user):
+        return self.like_user_set.filter(pk=user.pk).exist() # 유저를 제외한 like user를 반환
 
 class Tag(models.Model):
     name=models.CharField(max_length=50, unique=True)

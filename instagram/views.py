@@ -66,8 +66,6 @@ def index(request):
     post_list=Post.objects.all().filter(
         Q(author=request.user)|
         Q(author__in=request.user.following_set.all()) 
-        ).filter(
-            created_at__lte=timesince #less than equal 
         )
     #포스트 리스트를 가져오는데 팔로잉된 유저들의 내용만 가져온다.
 
@@ -81,3 +79,22 @@ def index(request):
         "suggested_user_list":suggested_user_list,
         "post_list":post_list,
     })
+
+@login_required
+def post_like(request,pk):
+    post=get_object_or_404(Post,pk=pk)#해당 pk의 포스트를 가져오는데 성공했다면
+    post.like_user_set.add(request.user)#좋아요에 추가
+
+    messages.success(request,f'포스팅 #{post.pk}를 좋아합니다.') 
+
+    redirect_url=request.META.get("HTTP_REFERER","root")#account의 views에서 가져옴
+    return redirect(redirect_url) 
+
+@login_required
+def post_dislike(request,pk):
+    post=get_object_or_404(Post,pk=pk)#해당 pk의 포스트를 가져오는데 성공했다면
+    post.like_user_set.remove(request.user)#좋아요에 삭제
+    messages.success(request,f'포스팅 #{post.pk} 좋아요를 취소합니다.') 
+
+    redirect_url=request.META.get("HTTP_REFERER","root")#account의 views에서 가져옴
+    return redirect(redirect_url) 

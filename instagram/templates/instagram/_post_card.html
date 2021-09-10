@@ -1,4 +1,4 @@
-
+{% load instagram_tags %}
 
 <div class="card">
     <div class="card-header">
@@ -10,12 +10,23 @@
     </div>
     <div class="card-body">
         <img src="{{post.photo.url}}" />
-    </div>
-    <div class="card-footer">
+        <br>
         {% for tag in post.tag_set.all %}
         <span class="badge bg-primary"> {# badge-->bg #}
         #{{tag.name}}
         </span>
         {% endfor %}
+    </div>
+    <div class="card-footer">
+        {% comment %} post.is_like_user(user)를 장고 Template에서 지원X, 따라서 custom Template사용! {% endcomment %}
+        {{post is_like_user:user}}
+
+        <a href="{% url "instagram:post_dislike" post.pk %}" style="color: inherit;">
+            <i class="fas fa-heart"></i> 
+        </a>
+        <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
+            <i class="far fa-heart"></i>
+        </a>
+        
     </div>
 </div>
