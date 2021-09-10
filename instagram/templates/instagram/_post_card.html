@@ -1,4 +1,4 @@
-{% load instagram_tags %}
+{% load instagram_tags humanize %}
 
 <div class="card">
     <div class="card-header">
@@ -10,24 +10,30 @@
     </div>
     <div class="card-body">
         <img src="{{post.photo.url}}" />
-        <br>
-        {% for tag in post.tag_set.all %}
-        <span class="badge bg-primary"> {# badge-->bg #}
-        #{{tag.name}}
-        </span>
-        {% endfor %}
+        <div>
+            {% comment %} post.is_like_user(user)를 장고 Template에서 지원X, 따라서 custom Template사용! {% endcomment %}
+            {% if post|is_like_user:user  %}{# |표시는 filter 표시다 #}
+                <a href="{% url "instagram:post_dislike" post.pk %}" style="color: inherit;">
+                <i class="fas fa-heart"></i> 
+                </a>
+            {% else %}
+                <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
+                <i class="far fa-heart"></i>
+                </a>
+            {% endif %} 
+            {# 여기 까지가 like/dislike 구현 #}
+        </div>
+        <div>
+            {% for tag in post.tag_set.all %}
+            <span class="badge bg-primary"> {# badge-->bg #}
+            #{{tag.name}}
+            </span>
+            {% endfor %}
+        </div>
+        {{post.created_at|naturaltime}}
     </div>
     <div class="card-footer">
-        {% comment %} post.is_like_user(user)를 장고 Template에서 지원X, 따라서 custom Template사용! {% endcomment %}
-        {% if post|is_like_user:user  %}
-            <a href="{% url "instagram:post_dislike" post.pk %}" style="color: inherit;">
-            <i class="fas fa-heart"></i> 
-            </a>
-        {% else %}
-            <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
-            <i class="far fa-heart"></i>
-            </a>
-        {% endif %} 
-        
+    {#Comment 구현#}
+    
     </div>
 </div>
