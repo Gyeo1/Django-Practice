@@ -30,10 +30,18 @@
             </span>
             {% endfor %}
         </div>
-        {{post.created_at|naturaltime}}
+        <div>
+            <a href="{{ post.get_absolute_url }}" class="text-muted">{#post_detail로 넘어감#}
+            <small>
+                {{post.created_at|naturaltime}}
+            </small>
+            </a>
+        </div>
+        
     </div>
     <div class="card-footer">
     {#Comment 구현#}
+    <a href="{% url 'instagram:commnet_new' post.pk %}">댓글 작성</a>
     
     </div>
 </div>

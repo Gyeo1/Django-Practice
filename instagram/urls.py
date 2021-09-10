@@ -10,6 +10,7 @@ urlpatterns = [
     path('post/<int:pk>',views.post_detail, name='post_detail'), #url int:pk는 정수형 url이란것
     path('post/<int:pk>/like/',views.post_like, name='post_like'),
     path('post/<int:pk>/dislike/',views.post_dislike, name='post_dislike'),
+    path('post/<int:post_pk>/commnet_new/',views.commnet_new, name='commnet_new'),
     re_path(r'^(?P<username>[\w.@+-]+)/$',views.user_page, name='user_page'),
     #여기서 엄청 막힘==> 반드시 정규 표현식 뒤에는 $를 써줘야 된다. 아니면 모든 url값에 대해 user_page가 간섭
 ]

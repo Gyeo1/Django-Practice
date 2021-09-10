@@ -2,13 +2,14 @@ import django
 from django.contrib import auth
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm
+from .forms import PostForm,CommentForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .models import Post, Tag
 from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
+
 # Create your views here.
 @login_required
 def post_new(request):
@@ -98,3 +99,21 @@ def post_dislike(request,pk):
 
     redirect_url=request.META.get("HTTP_REFERER","root")#account의 views에서 가져옴
     return redirect(redirect_url) 
+
+@login_required
+def commnet_new(requset,post_pk):
+    post=get_object_or_404(Post,pk=post_pk)#미리 포스트에 대한 검증 실지
+
+    if requset.method=="POST":
+        form=CommentForm(requset.POST, requset.FILES)
+        if form.is_valid(): 
+            comment=form.save(commit=False)#Why?==> fields가 messages만 있으므로 author와 post도 검증필요       
+            comment.post= post
+            comment.author=requset.user
+            return redirect(comment.post)
+    else:
+        form=CommentForm()
+    return render(requset,"instagram/commnet_form.html",{
+        "form":form,
+    })
+    

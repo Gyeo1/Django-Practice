@@ -1,6 +1,7 @@
 from django import forms
-from django.db import models 
-from .models import Post 
+from django.db import models
+from django.forms import fields 
+from .models import Comment, Post 
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -9,3 +10,8 @@ class PostForm(forms.ModelForm):
         widgets={
             "caption":forms.Textarea,
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model= Comment
+        fields=["messages"] # 댓글 작성시에는 메시지만 있으면 된다.
