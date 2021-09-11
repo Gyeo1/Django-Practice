@@ -1,0 +1,10 @@
+__pycache__
+db.sqlite3
+/static
+/media
+.idea
+.vscode
+askcompany/settings
+askcompany/static
+PracticeDjango/settings.py
+settings.py
