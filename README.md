@@ -1,2 +1,2 @@
 # RestoreRepo
-인스타그램 구현(REST API 사용 이전임)
+Django의 Form과 View/Models 만으로 구현(JavaScript 사용x)
