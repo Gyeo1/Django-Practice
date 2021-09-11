@@ -114,6 +114,10 @@ def comment_new(requset,post_pk):
             comment.post= post
             comment.author=requset.user
             comment.save()
+            # if requset.is_ajax():
+            #     return render(requset,"instagram/_comment.html",{
+            #         "comment":comment,
+            #     })
             return redirect(comment.post)
     else:
         form=CommentForm()

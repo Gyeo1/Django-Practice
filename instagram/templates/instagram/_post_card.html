@@ -27,11 +27,7 @@
 
         <div class="comment-list mt-3 mb-3">
             {% for comment in post.comment_set.all %} {#댓글 보여주기#}
-            <div class="comment">
-                <strong>{{comment.author}}</strong>:
-                {{comment.message}}
-                <small class='text-muted'>{{comment.created_at|naturaltime}}</small>
-            </div>
+                {% include 'instagram/_comment.html' %}
             {% endfor %}
         </div>
 
@@ -53,15 +49,41 @@
 
     <div class="card-footer">
     {#Comment 구현#}
-        <form action="{% url 'instagram:comment_new' post.pk %}" method="POST" enctype="">
+        <form id="post-{{ post.pk }}-comment-form" action="{% url 'instagram:comment_new' post.pk %}" method="POST" enctype="">
             {% csrf_token %}
             {% bootstrap_form comment_form %} {#댓글 쓰기#}
             <button class="btn btn-secondary btn-block mt-2">
                 댓글 작성
             </button>
         </form>
-        
+        {#jquery 사용하는 부분 시작#}
+{#자바 스트립트, 파이썬, bootstrap4 함수는 서로 다른 영역이라 실행되는 타이밍이 다르므로 서로 호출 불가능함!#}
+        {% comment %} <div id="server-response-{{ post.pk }}"></div>
+
+        <script>
+            $(function(){
+                var form_id="post-{{ post.pk }}-comment-form";
+                $("#"+form_id).submit(function(e){
+                    e.preventDefault();
+                    var options={
+                        target:"#server-response-{{ post.pk }}",
+                        success:function(responseText,statusText, xhr, $form){
+                            console.group("ajaxSubmit response");
+                            console.log(responseText);
+                            console.log(statusText);
+                            console.log(xhr);
+                            console.log($form);
+                            console.groupEnd();
+                        }
+                    };
+                    $(this).ajaxSubmit(options);
+
+                    console.log("submit!!");
+                });
+                console.log("document ready.");
+            });
+        </script>
 
     
-    </div>
+    </div> {% endcomment %}
 </div>
