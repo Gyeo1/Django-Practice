@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from .serializers import PostSerializer
 from .models import Post
+from rest_framework  import generics
 # Create your views here.
 
 #아래 두가지를 한번에 해주는게 ModelViewSet이다!
@@ -19,4 +20,8 @@ class PostViewSet(ModelViewSet):
         print("request.body: ",request.body)# logger 추천(실제 product에서는)
         print("request.post: ", request.POST)
         return super().dispatch(request,*args,**kwargs)
-    
+
+class PostListAPIView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+post_list=PostListAPIView.as_view()
