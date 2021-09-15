@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,10 +19,21 @@ class PostViewSet(ModelViewSet):
     #모델 ViewSet의 기본 구성, post_list의 2개분기, Post_detail의 3개분기를 두개로 간단히 정리가능
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    def dispatch(self, request, *args, **kwargs): #dispatch는 요청이 올때마다 호출되는 함수
-        print("request.body: ",request.body)# logger 추천(실제 product에서는)
-        print("request.post: ", request.POST)
-        return super().dispatch(request,*args,**kwargs)
+    @action(detail=False,methods=['GET'])
+    def public(self,request):
+        qs=self.get_queryset().filter(is_public=True)
+        # serializer=PostSerializer(qs,many=True) #PostSerializer도 가능하지만 지원해주는게 있다.
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+    @action(detail=True, methods=['PATCH'])
+    def set_public(self,request,pk):#pk번째 포스트에 대한 request 내용을 적용한다란 느낌
+        instance=self.get_object()#get_object_or_404 대신 Generic에서 지원해준다.
+        instance.is_public=True
+        instance.save()
+        serializer=self.get_serializer(instance)
+        return Response(serializer.data)
+
+
 
 #generic에 있는 ListAPIView로 PostList구현
 # class PostListAPIView(generics.ListAPIView):
