@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, action
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -60,3 +62,15 @@ def post_list(request):
             serializer.save()
             return Response(serializer.data,status=201)
         return Response(serializer.errors, status=400)
+
+
+class PostDetailAPIView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name='instagram/post_datail.html'
+    def get(self,request,*args,**kwargs):
+        post=self.get_object()
+
+        return Response({
+            'post':PostSerializer(post).data,
+        })

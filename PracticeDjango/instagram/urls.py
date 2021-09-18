@@ -10,5 +10,5 @@ router.register('post',views.PostViewSet) #2개의 url 패턴을 생성해준다
 urlpatterns=[
     # path('public/',views.post_list),
     path('',include(router.urls)), #prefix는 post이기 때문에 /post가 들어가 있다고 볼 수 있다.
-
+    path('mypost/<int:pk>/',views.PostDetailAPIView.as_view()),
 ]
