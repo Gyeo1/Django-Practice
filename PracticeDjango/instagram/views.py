@@ -67,7 +67,7 @@ def post_list(request):
 class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all()
     renderer_classes = [TemplateHTMLRenderer]
-    template_name='instagram/post_datail.html'
+    template_name='instagram/post_detail.html'
     def get(self,request,*args,**kwargs):
         post=self.get_object()
 
