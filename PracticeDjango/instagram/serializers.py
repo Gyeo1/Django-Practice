@@ -10,6 +10,7 @@ class AuthorSerializer(serializers.ModelSerializer):#Username 응답용이다.
 class PostSerializer(serializers.ModelSerializer):
     # author=AuthorSerializer()
     author_username=serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model=Post
         fields=[
@@ -19,4 +20,5 @@ class PostSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'is_public',
+            'ip',
         ]

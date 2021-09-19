@@ -21,7 +21,14 @@ class PostViewSet(ModelViewSet):
     #모델 ViewSet의 기본 구성, post_list의 2개분기, Post_detail의 3개분기를 두개로 간단히 정리가능
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    @action(detail=False,methods=['GET'])
+    #authentication_classes = [] #장고의 @login_required와 같은 개념
+
+    def perform_create(self, serializer):
+        author = self.request.user  # 왜 지정이 필요한가? ==> 사용자는 필수 모델 field, But 입력칸이 없다. 따라서 .user로 받아오는것.
+        ip = self.request.META['REMOTE_ADDR'] #ip도 마찬가지.
+        serializer.save(ip=ip,author=author)
+
+    @action(detail=False,methods=['GET']) #action의 detail?==> pk값을 받아야할 경우 True이다.
     def public(self,request):
         qs=self.get_queryset().filter(is_public=True)
         # serializer=PostSerializer(qs,many=True) #PostSerializer도 가능하지만 지원해주는게 있다.
