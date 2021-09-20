@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from .permissions import IsAuthorOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 from .serializers import PostSerializer
 from .models import Post
@@ -23,7 +23,7 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     # authentication_classes = [] #세션인증 토큰인증 방법 설정 가능
-    permission_classes = [IsAuthenticated]#@login_required 같은 개념이다. 자료 참고
+    permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]#@login_required 같은 개념이다. 자료 참고
 
     def perform_create(self, serializer):
         author = self.request.user  # 왜 지정이 필요한가? ==> 사용자는 필수 모델 field, But 입력칸이 없다. 따라서 .user로 받아오는것.
