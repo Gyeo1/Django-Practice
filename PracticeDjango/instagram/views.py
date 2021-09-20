@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, action
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -24,6 +25,11 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     # authentication_classes = [] #세션인증 토큰인증 방법 설정 가능
     permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]#@login_required 같은 개념이다. 자료 참고
+
+    filter_backends = [SearchFilter,OrderingFilter] #필터 사용
+    search_fields=['message'] #검색할 필드명 입력, 여러개 적용 가능
+    ordering_fields=['id']# 정렬할 필드명 입력 설정안하면 모든 필드에 대한 정렬 가능
+    ordering=['-id'] #-는 역순 정렬이다
 
     def perform_create(self, serializer):
         author = self.request.user  # 왜 지정이 필요한가? ==> 사용자는 필수 모델 field, But 입력칸이 없다. 따라서 .user로 받아오는것.
