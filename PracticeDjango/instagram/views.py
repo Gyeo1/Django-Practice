@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, action
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,7 +22,8 @@ class PostViewSet(ModelViewSet):
     #모델 ViewSet의 기본 구성, post_list의 2개분기, Post_detail의 3개분기를 두개로 간단히 정리가능
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    #authentication_classes = [] #장고의 @login_required와 같은 개념
+    # authentication_classes = [] #세션인증 토큰인증 방법 설정 가능
+    permission_classes = [IsAuthenticated]#@login_required 같은 개념이다. 자료 참고
 
     def perform_create(self, serializer):
         author = self.request.user  # 왜 지정이 필요한가? ==> 사용자는 필수 모델 field, But 입력칸이 없다. 따라서 .user로 받아오는것.

@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('apt-auth/', include('rest_framework.urls')),
+    path('apt-auth/', include('rest_framework.urls')), #DRF에서 제공되는 기본 로그인/로그아웃
     path('',include('instagram.urls')),
 ]
