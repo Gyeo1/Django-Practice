@@ -8,3 +8,4 @@ askcompany/settings
 askcompany/static
 PracticeDjango/settings.py
 settings.py
+PracticeDjango/test_token.py
