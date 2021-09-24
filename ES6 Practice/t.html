@@ -1,0 +1,14 @@
+<body></body>
+
+<script>
+  var div;
+  var container = document.getElementsByTagName('body')[0];
+  for(let i=0; i<5; i++) {
+    div = document.createElement('div’);
+    div.onclick = function() {
+        alert("clicked : #" + i);
+        };
+        div.innerHTML = "#" + i;
+        container.appendChild(div);
+        }
+</script>
