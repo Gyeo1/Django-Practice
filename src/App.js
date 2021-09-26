@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'antd';
 import './App.css';
+import PropTypes from 'prop-types';
+import ThemedButton from './ThemedButton';
 //import "antd/dist/antd.css" //==>App.css에서 추가안할시 .js에서 이렇게 설정
 
 //TODO: TODO list 구현
@@ -9,6 +11,10 @@ import './App.css';
 //   const name = '---';
 // }
 class PostDetail extends React.Component {
+  static propTypes = {
+    postId: PropTypes.number.isRequired,
+  };
+
   state = {
     postDetail: null,
   };
@@ -43,6 +49,7 @@ class PostDetail extends React.Component {
     const { postDetail } = this.state;
     return (
       <div>
+        <ThemedButton theme="success" label="Say Hello" />
         포스팅 #{postId}
         <hr />
         {!postDetail && '로딩중 ..'}
