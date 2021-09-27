@@ -7,7 +7,8 @@ class Counter extends React.Component {
     color: 'red',
   };
   static propTypes = {
-    color: PropTypes.string, //props를 받는다면 디폴트 타입을 설정해주는게 좋다.
+    //props를 받는다면 디폴트 타입을 설정해주는게 좋다.
+    color: PropTypes.string,
   };
   state = {
     color: this.props.color, //부모로 부터 색을 받음

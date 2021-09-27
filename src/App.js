@@ -4,6 +4,8 @@ import './App.css';
 import PropTypes from 'prop-types';
 import ThemedButton from './ThemedButton';
 import Counter from './Counter.js';
+import Message from './Message.js';
+import Profile from './Profile.js';
 //import "antd/dist/antd.css" //==>App.css에서 추가안할시 .js에서 이렇게 설정
 
 // //TODO: TODO list 구현
@@ -119,6 +121,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Profile />
+        <Message />
         <Counter />
         <Counter color="green" />
         <Counter color="blue" />
