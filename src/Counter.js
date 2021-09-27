@@ -7,8 +7,9 @@ class Counter extends React.Component {
   };
 
   state = {};
+
   render() {
-    return <div>Counter</div>;
+    return <div onClick={this.props.onClick}>Counter</div>; //DOM 요소에 이벤트 설정하기.
   }
 }
 

@@ -3,62 +3,62 @@ import { Button } from 'antd';
 import './App.css';
 import PropTypes from 'prop-types';
 import ThemedButton from './ThemedButton';
-import Counter from 'Counter';
+import Counter from './Counter.js';
 //import "antd/dist/antd.css" //==>App.css에서 추가안할시 .js에서 이렇게 설정
 
-//TODO: TODO list 구현
-// function TodoList() {
-//   const title = '...';
-//   const name = '---';
+// //TODO: TODO list 구현
+// // function TodoList() {
+// //   const title = '...';
+// //   const name = '---';
+// // }
+// class PostDetail extends React.Component {
+//   static propTypes = {
+//     postId: PropTypes.number.isRequired,
+//   };
+
+//   state = {
+//     postDetail: null,
+//   };
+
+//   componentDidMount() {
+//     //처음에 호출
+//     const { postId } = this.props;
+//     this.requestPost(postId); //requestPost로 postID 넘겨줌
+//   }
+
+//   componentDidUpdate(preProps) {
+//     //마운트 되고 나서 호출
+//     const { postId } = this.props;
+//     if (postId !== preProps.postId) {
+//       this.requestPost(postId);
+//     }
+//   }
+//   requestPost(postId) {
+//     console.log(`request post ${postId}`);
+//     this.setState({
+//       postDetail: null,
+//     });
+//     setTimeout(() => {
+//       this.setState({
+//         postDetail: `로딩된 post #${postId}`,
+//       });
+//     }, 3000);
+//   }
+
+//   render() {
+//     const { postId } = this.props;
+//     const { postDetail } = this.state;
+//     return (
+//       <div>
+//         <ThemedButton theme="success" label="Say Hello" />
+//         포스팅 #{postId}
+//         <hr />
+//         {!postDetail && '로딩중 ..'}
+//         {postDetail}
+//       </div>
+//     );
+//   }
 // }
-class PostDetail extends React.Component {
-  static propTypes = {
-    postId: PropTypes.number.isRequired,
-  };
-
-  state = {
-    postDetail: null,
-  };
-
-  componentDidMount() {
-    //처음에 호출
-    const { postId } = this.props;
-    this.requestPost(postId); //requestPost로 postID 넘겨줌
-  }
-
-  componentDidUpdate(preProps) {
-    //마운트 되고 나서 호출
-    const { postId } = this.props;
-    if (postId !== preProps.postId) {
-      this.requestPost(postId);
-    }
-  }
-  requestPost(postId) {
-    console.log(`request post ${postId}`);
-    this.setState({
-      postDetail: null,
-    });
-    setTimeout(() => {
-      this.setState({
-        postDetail: `로딩된 post #${postId}`,
-      });
-    }, 3000);
-  }
-
-  render() {
-    const { postId } = this.props;
-    const { postDetail } = this.state;
-    return (
-      <div>
-        <ThemedButton theme="success" label="Say Hello" />
-        포스팅 #{postId}
-        <hr />
-        {!postDetail && '로딩중 ..'}
-        {postDetail}
-      </div>
-    );
-  }
-}
 
 // class Counter1 extends React.Component {
 //   state = {
@@ -98,8 +98,23 @@ class PostDetail extends React.Component {
 // }
 
 class App extends React.Component {
+  static = { myquery: '', language: '' };
+  onChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
   render() {
-    return <Counter onClick={console.log('clicked')} />;
+    return (
+      <>
+        <Counter onClick={() => console.log('clicked')} />
+        <input name="myquery" onChange={this.onChange} />
+        <input name="language" onChange={this.onChange} />
+        <hr />
+        {JSON.stringify(this.state)}
+      </>
+    );
   }
 }
 
