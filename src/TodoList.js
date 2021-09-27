@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, List } from 'antd';
+import { produce } from 'immer';
 
 class TodoList extends React.Component {
   state = {
@@ -19,15 +20,35 @@ class TodoList extends React.Component {
   onKeyDown = (e) => {
     //키가 눌렸을때 발생되는 함수
     if (e.keyCode === 13) {
-      //13이 enter 키이다.
-      const { todoList, current } = this.state;
-      if (current.length > 0) {
-        this.setState({
-          current: '',
-          todoList: [...todoList, current], //이렇게 하는 이유 ==>state 값을 push 같은걸로 함부로 건들면 안됨
-        });
-      }
+      this.setState(
+        (prevState) =>
+          produce(prevState, (draft) => {
+            const current = draft.current.trim();
+            if (current.length > 0) {
+              draft.current = '';
+              draft.todoList.push(current);
+            }
+          }),
+
+        // produce(this.state, (draft) => {
+        //   const current = draft.current.trim();
+        //   if (current.length > 0) {
+        //     draft.current = '';
+        //     draft.todoList.push(current);
+        //   }
+        // }),
+      );
     }
+    // if (e.keyCode === 13) {
+    //   //13이 enter 키이다.
+    //   const { todoList, current } = this.state;
+    //   if (current.length > 0) {
+    //     this.setState({
+    //       current: '',
+    //       todoList: [...todoList, current], //이렇게 하는 이유 ==>state 값을 push 같은걸로 함부로 건들면 안됨
+    //     });
+    //   }
+    // }
   };
   render() {
     return (
