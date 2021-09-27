@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input, List } from 'antd';
 
 class TodoList extends React.Component {
   state = {
@@ -30,11 +31,26 @@ class TodoList extends React.Component {
   };
   render() {
     return (
-      <div>
-        <ul>
+      <div style={{ width: '300px', margin: '10px auto' }}>
+        <List
+          header={'TodoList'}
+          dataSource={this.state.todoList}
+          bordered={true}
+          renderItem={(todo) => <List.Item>{todo}</List.Item>}
+          style={{ marginBottom: '5px' }}
+        />
+        <Input
+          type="text"
+          value={this.state.current}
+          placeholder="할일을 입력해 주세요"
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+        />
+        {/* <ul>
           {this.state.todoList.map((todo, index) => (
             <li key={index}>{todo}</li>
           ))}
+         
         </ul>
         <input
           value={this.state.current}
@@ -43,7 +59,7 @@ class TodoList extends React.Component {
           placeholder="할 일을 입력해 주세요"
         />
         <hr />
-        {JSON.stringify(this.state)}
+        {JSON.stringify(this.state)} */}
       </div>
     );
   }
