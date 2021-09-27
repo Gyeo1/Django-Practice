@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import './App.css';
 import PropTypes from 'prop-types';
 import ThemedButton from './ThemedButton';
+import Counter from 'Counter';
 //import "antd/dist/antd.css" //==>App.css에서 추가안할시 .js에서 이렇게 설정
 
 //TODO: TODO list 구현
@@ -97,18 +98,8 @@ class PostDetail extends React.Component {
 // }
 
 class App extends React.Component {
-  state = {
-    postId: 10,
-  };
   render() {
-    return (
-      <div>
-        <PostDetail postId={this.state.postId} />
-        <button onClick={() => this.setState({ postId: 20 })}>
-          PostId 변경
-        </button>
-      </div>
-    );
+    return <Counter onClick={console.log('clicked')} />;
   }
 }
 
