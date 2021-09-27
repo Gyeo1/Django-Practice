@@ -98,22 +98,31 @@ import Counter from './Counter.js';
 // }
 
 class App extends React.Component {
-  static = { myquery: '', language: '' };
-  onChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  // static = { myquery: '', language: '' };
+  // onChange = (e) => {
+  //   const { name, value } = e.target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
+  // render() {
+  //   return (
+  //     <>
+  //       <Counter onClick={() => console.log('clicked')} />
+  //       <input name="myquery" onChange={this.onChange} />
+  //       <input name="language" onChange={this.onChange} />
+  //       <hr />
+  //       {JSON.stringify(this.state)}
+  //     </>
+  //   );
+  // }
   render() {
     return (
-      <>
-        <Counter onClick={() => console.log('clicked')} />
-        <input name="myquery" onChange={this.onChange} />
-        <input name="language" onChange={this.onChange} />
-        <hr />
-        {JSON.stringify(this.state)}
-      </>
+      <div>
+        <Counter />
+        <Counter color="green" />
+        <Counter color="blue" />
+      </div>
     );
   }
 }
