@@ -7,9 +7,10 @@ import TodoList from './TodoList';
 import reportWebVitals from './reportWebVitals';
 import App3 from './App3';
 import EpisodeList from './EpisodeList';
+import App4 from './App4';
 ReactDOM.render(
   <React.StrictMode>
-    <EpisodeList />
+    <App4 />
   </React.StrictMode>,
   document.getElementById('root'),
 );
