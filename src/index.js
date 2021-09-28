@@ -6,9 +6,10 @@ import App2 from './App2';
 import TodoList from './TodoList';
 import reportWebVitals from './reportWebVitals';
 import App3 from './App3';
+import EpisodeList from './EpisodeList';
 ReactDOM.render(
   <React.StrictMode>
-    <App3 />
+    <EpisodeList />
   </React.StrictMode>,
   document.getElementById('root'),
 );
