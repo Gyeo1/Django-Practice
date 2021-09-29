@@ -11,9 +11,33 @@ const useCurrentTime = () => {
   }, []);
   return currentTime;
 };
+
+const useWindowWidth = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return width;
+};
+const Message = ({ message }) => {
+  const windowWidth = useWindowWidth();
+  return (
+    <div>
+      windowWidth: {windowWidth}, message: {message}
+    </div>
+  );
+};
 const App = () => {
   const currentTime = useCurrentTime();
-  return <div>{currentTime}</div>;
+  return (
+    <div>
+      {currentTime}
+      <hr />
+      <Message />
+    </div>
+  );
 };
 
 export default App;
