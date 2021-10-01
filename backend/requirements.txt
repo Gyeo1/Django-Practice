@@ -5,3 +5,4 @@ django~=3.0.0
 #개발용
 django-debug-toolbar
 pillow
+djangorestframework
