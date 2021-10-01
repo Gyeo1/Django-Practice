@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import Post from "./Post";
 
 const apiURL = "http://localhost:8000/api/post/";
 //이 경로로 바로 요청을 하면 거부 먹는다 Why?==>CORS 때문에 가장 편한거는 장고 header를 사용해 허가해주는것
@@ -24,15 +25,7 @@ function PostList() {
     <div>
       <h2>Post List</h2>
       {postList.map((post) => {
-        const { id, caption, location, photo } = post;
-        //    <div>{JSON.stringify(post)}</div> //object를 직렬화 해서 보여줘야된다.
-        return (
-          //key를 쓰는 이유 ==>map을 사용해서 전체를 순회? Element의 식별자가 필요로 하다
-          <div key={id}>
-            {caption}, {location}
-            <img src={photo} alt={caption} style={{ width: "100px" }} />
-          </div>
-        );
+        return <Post post={post} key={post.id} />;
       })}
     </div>
   );
