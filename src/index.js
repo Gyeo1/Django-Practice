@@ -9,9 +9,10 @@ import App3 from './App3';
 import EpisodeList from './EpisodeList';
 import App4 from './App4';
 import App5 from './App5';
+import App7 from './App7';
 ReactDOM.render(
   <React.StrictMode>
-    <App5 />
+    <App7 />
   </React.StrictMode>,
   document.getElementById('root'),
 );
