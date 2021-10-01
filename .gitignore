@@ -4,4 +4,4 @@
 settings
 db.sqlite3
 __pycache__
-
+__init__.py

@@ -1,0 +1,6 @@
+django~=3.0.0
+
+#common용
+
+#개발용
+django-debug-toolbar
