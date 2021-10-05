@@ -38,7 +38,7 @@ function AppLayout({ children }) {
         <StoryList style={{ marginBottom: "1rem" }} />
         <SuggestionList style={{ marginBottom: "1rem" }} />
       </div>
-      <div className="footer">&copy; 2020. Gyeol</div>
+      <div className="footer">&copy; 2021. Gyeol</div>
     </div>
   );
 }
