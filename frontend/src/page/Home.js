@@ -1,6 +1,6 @@
 import React from "react";
-
+import PostList from "../components/PostList";
 function Home() {
-  return <div>Home 페이지 입니다</div>;
+  return <PostList />;
 }
 export default Home;

@@ -8,12 +8,11 @@ import AccountRoutes from "./accounts";
 function Root() {
   return (
     <AppLayout>
-      최상위 컴포넌트 입니다.
       <Route exact={true} path="/" component={Home} />
       <Route exact path="/about" component={About} />
       {/* <Route path="/" /> <About /> */}
       {/* 만약 exact를 사용 안하게 된다면 ==> about으로 이동시 Home도 보여진다. */}
-      <Route path="/accounts" component={AccountRoutes} />
+      <Route exact path="/accounts" component={AccountRoutes} />
     </AppLayout>
   );
 }

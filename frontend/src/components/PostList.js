@@ -23,7 +23,6 @@ function PostList() {
   }, []); //컴포넌트가 mount될시 1회만 호출됨(배열을 비워 놓으면)
   return (
     <div>
-      <h2>Post List</h2>
       {postList.map((post) => {
         return <Post post={post} key={post.id} />;
       })}

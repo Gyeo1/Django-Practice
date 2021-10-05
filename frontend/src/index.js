@@ -1,7 +1,8 @@
 import React from "react";
+import "antd/dist/antd.css";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Root from "./page/index";
+import Root from "./page";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
