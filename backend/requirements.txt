@@ -6,3 +6,4 @@ django~=3.0.0
 django-debug-toolbar
 pillow
 djangorestframework
+djangorestframework-jwt
