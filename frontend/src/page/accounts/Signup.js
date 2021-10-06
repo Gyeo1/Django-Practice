@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"; //
 import Axios from "axios";
-import { Alert } from "antd";
+import { Alert, Form, Input } from "antd";
 
-function Signup() {
+function SignupNon() {
   const [inputs, setInputs] = useState({ username: "", password: "" }); //useEffect에서 사용하기 위해 초기화
   const [errors, setErrors] = useState({});
   const [formDisable, setFormDisable] = useState(true);
@@ -14,7 +14,7 @@ function Signup() {
 
   //inputs값이 변할때 마다 호출
   useEffect(() => {
-    const isEnable = Object.values(inputs).every((s) => s.length > 0); //문자열이 전부다 커야지만
+    const isEnable = Object.values(inputs).every((s) => s.length > 0); //문자열이 전부다 0보다 커야됨
     // const isEnable = inputs.username.length > 0 && inputs.password.length > 0;
     setFormDisable(!isEnable);
   }, [inputs]);
@@ -71,4 +71,4 @@ function Signup() {
     </div>
   );
 }
-export default Signup;
+export default SignupNon;
