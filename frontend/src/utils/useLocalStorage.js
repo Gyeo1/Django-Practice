@@ -1,4 +1,4 @@
-//https://usehooks.com/useLocalStorage/의 코드 입니다.
+//https://usehooks.com/useLocalStorage/ 의 코드 입니다.
 import { useState } from "react";
 
 export function getStorageItem(key, initialValue) {

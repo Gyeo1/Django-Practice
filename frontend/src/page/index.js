@@ -8,17 +8,14 @@ import { Route, Switch } from "react-router-dom";
 import Signup from "./accounts/Signup_antd";
 import Login from "./accounts/Login";
 import Profile from "./accounts/Profile";
-
+import LoginRequiredRouter from "../utils/LoginRequiredRouter";
 function Root() {
   return (
     <AppLayout>
-      {/* <Route exact={true} path="/accounts" component={AccountRoutes} /> */}
-      {/* 아래 3줄은 accounts 관련 경로이다. */}
-      <Route exact={true} path="/" component={Home} />
-      <Route exact={true} path="/accounts/signup" component={Signup} />
-      <Route exact={true} path="/accounts/login" component={Login} />
-      <Route exact={true} path="/accounts/Profile" component={Profile} />
-
+      <LoginRequiredRouter exact path="/" component={Home} />
+      <Route exact path="/accounts/signup" component={Signup} />
+      <Route exact path="/accounts/login" component={Login} />
+      <LoginRequiredRouter exact path="/accounts/profile" component={Profile} />
       <Route exact={true} path="/about" component={About} />
     </AppLayout>
   );

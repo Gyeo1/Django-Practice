@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom"; //
+import { useHistory, useLocation } from "react-router-dom"; //
 import Axios from "axios";
 import { Card, Alert, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능, CustomHook이다.
-
+import LoginRequiredRouter from "../../utils/LoginRequiredRouter";
 function Login() {
   const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
   //디폴트로 빈 공백 주고 키는 jwtToken, JWT 토큰을 Localstorage에 저장
@@ -12,11 +12,11 @@ function Login() {
   //다른 방법으로는 useEffect를 활용하는 방법이 있다.
 
   const history = useHistory();
-
-  //useLoacl Storage로 jwt 토큰을 jwtToken이란 곳에 담과 localstorage에 저장한다.
-  // const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", ""); //디폴트로 빈 공백 주고 키는 jwtToken
-
   const [fieldErrors, setFieldErrors] = useState({});
+  const location = useLocation(); //useLoacte로 어느 경로를 통해서 왔는지 확인 가능하다
+  const { from: loginRedirectUrl } = location.state || {
+    from: { pathname: "/" },
+  };
 
   const onFinish = (values) => {
     async function fn() {
@@ -33,14 +33,16 @@ function Login() {
         const {
           data: { token: jwtToken },
         } = response; //jwtToken=response.data.token의 또다른 표현식이다
-        setJwtToken(jwtToken);
+        setJwtToken(jwtToken); //할당이 된다
 
         console.log("jwtToken:", jwtToken);
         notification.open({
           message: "로그인 성공",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
-        // history.push("/"); //TODO: 이동할 주소 추가 예정
+        console.log("location.state: ", location.state); //어느 경로로 Login에 접근했는지 출력
+
+        history.push(loginRedirectUrl); //TODO: 이동할 주소 추가 예정
       } catch (error) {
         //await는 항상 async안에서 사용한다.
         if (error.response) {
