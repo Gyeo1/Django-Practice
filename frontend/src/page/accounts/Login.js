@@ -4,13 +4,15 @@ import Axios from "axios";
 import { Card, Alert, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능
+import { setToken, useAppContext } from "../../store";
 function Login() {
-  //antd의 Form의 코드를 참조했다.
+  const { store, dispatch } = useAppContext();
   const history = useHistory();
-  const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", ""); //디폴트로 빈 공백 주고 키는 jwtToken
-  const [fieldErrors, setFieldErrors] = useState({});
 
-  console.log("Loaded Token:", jwtToken); //새로고침해도 이전에 받은 jwtToken이 저장되어 있다.
+  //useLoacl Storage로 jwt 토큰을 jwtToken이란 곳에 담과 localstorage에 저장한다.
+  // const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", ""); //디폴트로 빈 공백 주고 키는 jwtToken
+
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const onFinish = (values) => {
     async function fn() {
@@ -26,8 +28,8 @@ function Login() {
         ); //토큰을 response로 받아오고 이를 아래 처럼 값을 따로 저장한다.
         const {
           data: { token: jwtToken },
-        } = response; //jwtToken=response.data.token의 표현식이다
-        setJwtToken(jwtToken);
+        } = response; //jwtToken=response.data.token의 또다른 표현식이다
+        dispatch(setToken(jwtToken));
 
         console.log("jwtToken:", jwtToken);
         notification.open({

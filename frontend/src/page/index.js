@@ -14,11 +14,11 @@ function Root() {
     <AppLayout>
       {/* <Route exact={true} path="/accounts" component={AccountRoutes} /> */}
       {/* 아래 3줄은 accounts 관련 경로이다. */}
+      <Route exact={true} path="/" component={Home} />
       <Route exact={true} path="/accounts/signup" component={Signup} />
       <Route exact={true} path="/accounts/login" component={Login} />
       <Route exact={true} path="/accounts/Profile" component={Profile} />
 
-      <Route exact={true} path="/" component={Home} />
       <Route exact={true} path="/about" component={About} />
     </AppLayout>
   );
