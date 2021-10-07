@@ -3,10 +3,14 @@ import { useHistory } from "react-router-dom"; //
 import Axios from "axios";
 import { Card, Alert, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
-import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능
-import { setToken, useAppContext } from "../../store";
+import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능, CustomHook이다.
+
 function Login() {
-  const { store, dispatch } = useAppContext();
+  const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
+  //디폴트로 빈 공백 주고 키는 jwtToken, JWT 토큰을 Localstorage에 저장
+  //CustomHook을 사용해 원하는 변수의 값을 LocalStorage에 저장하는게 핵심이다.
+  //다른 방법으로는 useEffect를 활용하는 방법이 있다.
+
   const history = useHistory();
 
   //useLoacl Storage로 jwt 토큰을 jwtToken이란 곳에 담과 localstorage에 저장한다.
@@ -29,14 +33,14 @@ function Login() {
         const {
           data: { token: jwtToken },
         } = response; //jwtToken=response.data.token의 또다른 표현식이다
-        dispatch(setToken(jwtToken));
+        setJwtToken(jwtToken);
 
         console.log("jwtToken:", jwtToken);
         notification.open({
           message: "로그인 성공",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
-        // history.push("/accounts/login"); //TODO: 이동한 주소 추가 예정
+        // history.push("/"); //TODO: 이동할 주소 추가 예정
       } catch (error) {
         //await는 항상 async안에서 사용한다.
         if (error.response) {
