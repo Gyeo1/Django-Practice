@@ -33,16 +33,15 @@ function Login() {
         const {
           data: { token: jwtToken },
         } = response; //jwtToken=response.data.token의 또다른 표현식이다
-        setJwtToken(jwtToken); //할당이 된다
+        await setJwtToken(jwtToken); //할당이 된다
 
-        console.log("jwtToken:", jwtToken);
         notification.open({
           message: "로그인 성공",
           icon: <SmileOutlined style={{ color: "#108ee9" }} />,
         });
         console.log("location.state: ", location.state); //어느 경로로 Login에 접근했는지 출력
 
-        history.push(loginRedirectUrl); //TODO: 이동할 주소 추가 예정
+        window.location.replace(loginRedirectUrl.pathname); //TODO: 이동할 주소 추가 예정
       } catch (error) {
         //await는 항상 async안에서 사용한다.
         if (error.response) {
