@@ -1,10 +1,9 @@
 import React from "react";
-import { UserOutlined } from "@ant-design/icons";
 import { Button, Avatar } from "antd";
 import "./Suggestion.scss";
 
-export default function Suggestion({ suggestionUser }) {
-  const { username, name, avatar_url } = suggestionUser;
+export default function Suggestion({ suggestionUser, onFollowUser }) {
+  const { username, name, avatar_url, is_follow } = suggestionUser;
 
   return (
     <div className="suggestion">
@@ -18,12 +17,16 @@ export default function Suggestion({ suggestionUser }) {
             />
           }
         />
-
-        {/* <UserOutlined /> */}
       </div>
       <div className="username">{name.length === 0 ? username : name}</div>
       <div className="action">
-        <Button size="small"> Follow</Button>
+        {is_follow && "팔로우"}
+        {!is_follow && (
+          <Button size="small" onClick={() => onFollowUser(username)}>
+            {" "}
+            Follow
+          </Button>
+        )}
       </div>
     </div>
   );
