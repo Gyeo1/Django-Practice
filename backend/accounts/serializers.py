@@ -19,3 +19,9 @@ class SignupSerializer(serializers.ModelSerializer):
         model = User
         fields = ['pk', 'username', 'password']  # password를 암호화 해줘야된다.
         # 암호화된 password는 admin에 가서 user 확인해 보면 된다.
+
+
+class SuggestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "name", "avatar_url"]  # 유저 이름만 보여주면 ok!

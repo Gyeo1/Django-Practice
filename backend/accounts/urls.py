@@ -6,4 +6,7 @@ urlpatterns = [
     path('token/', obtain_jwt_token),
     path("token/refresh/", refresh_jwt_token),
     path("token/verifiy/", verify_jwt_token),
+
+    path("suggestions/", views.SuggestionListAPIView.as_view(),
+         name="suggest_user_list")
 ]

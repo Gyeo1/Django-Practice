@@ -7,3 +7,4 @@ django-debug-toolbar
 pillow
 djangorestframework
 djangorestframework-jwt
+django-pydenticon

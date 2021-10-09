@@ -35,7 +35,7 @@ class User(AbstractUser):
 
     @property  # name으로 접근시 발동
     def name(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name}".strip()  # strip으로 공백 제거
 
     @property
     def avatar_url(self):  # 아바타 호출시 아바타가 없으면 pydenticon 랜덤 이미지 배포

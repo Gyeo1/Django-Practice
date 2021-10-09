@@ -19,11 +19,14 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls.conf import include
+from django_pydenticon.views import image as pydenticon_image
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('instagram.urls')),
     path('accounts/', include('accounts.urls')),
+    path("identicon/image/<path:data>/",
+         pydenticon_image, name="pydenticon_image"),
 ]
 # 요청이 MEDIA_URL이면 어디로 갈지
 if settings.DEBUG:
