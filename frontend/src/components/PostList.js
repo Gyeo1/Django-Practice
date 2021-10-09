@@ -24,15 +24,6 @@ function PostList() {
       .catch((error) => {
         //error.response;
       }); //then은 성공 catch는 실패시
-    // Axios({ method: "GET", url: apiURL, headers })
-    //   .then((response) => {
-    //     const { data } = response;
-    //     console.log("loaded response:", response);
-    //     setPostList(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("에러 발생");
-    //   }); //then은 성공 catch는 실패시
     console.log("Mounted");
   }, []); //컴포넌트가 mount될시 1회만 호출됨(배열을 비워 놓으면)
   return (
