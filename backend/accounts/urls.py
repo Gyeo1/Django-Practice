@@ -8,5 +8,8 @@ urlpatterns = [
     path("token/verifiy/", verify_jwt_token),
 
     path("suggestions/", views.SuggestionListAPIView.as_view(),
-         name="suggest_user_list")
+         name="suggest_user_list"),
+
+    path("follow/", views.user_follow, name="user_follow"),
+    path("unfollow/", views.user_unfollow, name="user_unfollow"),
 ]

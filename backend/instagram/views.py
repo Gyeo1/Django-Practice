@@ -11,17 +11,19 @@ from datetime import timedelta
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().select_related(
+        "author").prefetch_related("tag_set")  # manyTomany관계는 prefetch로 묶어준다
+
     serializer_class = PostSerializer
     # FIXME: 모든 요청을 허락한다 , 추후에 바꾸기, 없으면 아무도 내용을 가져가지 못함
     # permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     timesince = timezone.now()-timedelta(days=3)
-    #     qs = super().get_queryset()
-    #     qs = qs.filter(
-    #         Q(author=self.request.user) |
-    #         Q(author__in=self.request.user.following_set.all())
-    #     )
-    #     qs = qs.filter(created_at__gte=timesince)
-    #     return
+    def get_queryset(self):  # 팔로인 중인 유저만 가져온다
+        # timesince = timezone.now()-timedelta(days=3)
+        qs = super().get_queryset()
+        qs = qs.filter(
+            Q(author=self.request.user) |
+            Q(author__in=self.request.user.following_set.all())
+        )
+        # qs = qs.filter(created_at__gte=timesince)
+        return qs
