@@ -3,7 +3,7 @@ import "./AppLayout.scss";
 import { Input, Menu } from "antd";
 import SuggestionList from "./SuggestionList";
 import StoryList from "./StoryList";
-function AppLayout({ children }) {
+function AppLayout({ children, sidebar }) {
   let style1 = {
     display: "inline-block",
     width: "150px",
@@ -35,8 +35,9 @@ function AppLayout({ children }) {
 
       <div className="contents">{children}</div>
       <div className="sidebar">
-        <StoryList style={{ marginBottom: "1rem" }} />
-        <SuggestionList style={{ marginBottom: "1rem" }} />
+        {sidebar}
+        {/* <StoryList style={{ marginBottom: "1rem" }} />
+        <SuggestionList style={{ marginBottom: "1rem" }} /> */}
       </div>
       <div className="footer">&copy; 2021. Gyeol</div>
     </div>

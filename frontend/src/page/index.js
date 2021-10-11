@@ -9,15 +9,17 @@ import Signup from "./accounts/Signup_antd";
 import Login from "./accounts/Login";
 import Profile from "./accounts/Profile";
 import LoginRequiredRouter from "../utils/LoginRequiredRouter";
+import PostNew from "./PostNew";
 function Root() {
   return (
-    <AppLayout>
+    <>
       <LoginRequiredRouter exact path="/" component={Home} />
       <Route exact path="/accounts/signup" component={Signup} />
       <Route exact path="/accounts/login" component={Login} />
       <LoginRequiredRouter exact path="/accounts/profile" component={Profile} />
+      <LoginRequiredRouter exact path="/posts/new" component={PostNew} />
       <Route exact={true} path="/about" component={About} />
-    </AppLayout>
+    </>
   );
 }
 export default Root;
