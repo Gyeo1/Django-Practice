@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Avatar } from "antd";
 import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
-function Post({ post }) {
-  const { id, caption, location, photo, tag_set, like_user_set, author } = post;
+function Post({ post, handleLike }) {
+  const { id, caption, location, photo, tag_set, is_like, author } = post;
   const { username, avatar_url, name } = author;
   //    <div>{JSON.stringify(post)}</div> //object를 직렬화 해서 보여줘야된다.
   return (
@@ -11,7 +11,15 @@ function Post({ post }) {
       <Card
         hoverable
         cover={<img src={photo} alt={caption} style={{ width: "100px" }} />}
-        actions={[<HeartFilled />]}
+        actions={[
+          is_like ? (
+            <HeartFilled onClick={() => handleLike({ post, is_like: false })} />
+          ) : (
+            <HeartOutlined
+              onClick={() => handleLike({ post, is_like: true })}
+            />
+          ),
+        ]}
       >
         <Card.Meta
           avatar={
