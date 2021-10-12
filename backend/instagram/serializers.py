@@ -1,5 +1,5 @@
 from django.db.models import fields
-from rest_framework import serializers
+from rest_framework import request, serializers
 from .models import Post
 from django.contrib.auth import get_user_model
 
@@ -13,7 +13,18 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
+    is_like = serializers.SerializerMethodField("is_like_field")  # 호출
+
+    def is_like_field(self, post):
+        # post로 판단을 해야된다. 그러려면 user 정보가 필요하다(로그인중인)
+        # 어떻게 로그인 중인 유저를 알 수 있나==>context로 임의의 값을 serializer에서 받기 가능
+        # 접근은 self.context로 접근 가능
+        if 'request' in self.context:
+            user = self.context['request'].user
+            return post.like_user_set.filter(pk=user.pk).exists()
+        return False
 
     class Meta:
         model = Post
-        fields = "__all__"  # 원래는 전체 필드 지정하면 x, 개발 단계니깐 해보는것
+        fields = ["id", "author", "created_at", "photo", "location",
+                  "tag_set", "caption", "is_like"]  # 원래는 전체 필드 지정하면 x, 개발 단계니깐 해보는것
