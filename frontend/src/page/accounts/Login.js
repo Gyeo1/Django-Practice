@@ -5,6 +5,7 @@ import { Card, Alert, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능, CustomHook이다.
 import LoginRequiredRouter from "../../utils/LoginRequiredRouter";
+import { parseErrorMessages } from "../../utils/forms";
 function Login() {
   localStorage.removeItem("jwtToken");
   const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
@@ -52,18 +53,8 @@ function Login() {
             icon: <FrownOutlined style={{ color: "#ff3333" }} />,
           });
           const { data: fieldsErrorMessages } = error.response;
-          setFieldErrors(
-            Object.entries(fieldsErrorMessages).reduce(
-              (acc, [fieldName, errors]) => {
-                acc[fieldName] = {
-                  validateStatus: "error",
-                  help: errors.join(" "),
-                };
-                return acc;
-              },
-              {}
-            ) //reduce로 누적해 가면서 에러 값들을 합친다
-          );
+
+          setFieldErrors(parseErrorMessages(fieldsErrorMessages));
         }
       }
     }
