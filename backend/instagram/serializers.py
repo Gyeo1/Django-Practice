@@ -1,6 +1,7 @@
+from django.db import models
 from django.db.models import fields
 from rest_framework import request, serializers
-from .models import Post
+from .models import Post, Comment
 from django.contrib.auth import get_user_model
 
 
@@ -28,3 +29,11 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ["id", "author", "created_at", "photo", "location",
                   "tag_set", "caption", "is_like"]  # 원래는 전체 필드 지정하면 x, 개발 단계니깐 해보는것
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = "__all__"

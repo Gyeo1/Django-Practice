@@ -1,6 +1,10 @@
-import React from "react";
-import { Card, Avatar } from "antd";
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import { Card, Avatar, Comment, Tooltip } from "antd";
 import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
+import moment from "moment";
+import CommentList from "./CommentList";
+
 function Post({ post, handleLike }) {
   const { id, caption, location, photo, tag_set, is_like, author } = post;
   const { username, avatar_url, name } = author;
@@ -35,7 +39,9 @@ function Post({ post, handleLike }) {
           }
           title={location}
           description={caption}
+          style={{ marginBottom: "0.5em" }}
         />
+        <CommentList post={post} />
       </Card>
       {/* {caption}, {location}
       <img src={photo} alt={caption} style={{ width: "100px" }} /> */}

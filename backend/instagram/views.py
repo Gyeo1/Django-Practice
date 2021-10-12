@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import serializers, status
 from rest_framework.response import Response
-from .models import Post
+from .models import Comment, Post
 from rest_framework.viewsets import ModelViewSet
-from .serializers import PostSerializer
+from .serializers import CommentSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.models import Q
 from django.utils import timezone
@@ -53,3 +53,22 @@ class PostViewSet(ModelViewSet):
         post = self.get_object()
         post.like_user_set.remove(self.request.user)
         return Response(status.HTTP_204_NO_CONTENT)
+
+
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        # kwarg로 url에서 캡쳐된 값을 가져올 수 있다.
+        # 사용하는 이유는 pk번째 post의 commnet를 가져오기 위해
+        qs = qs.filter(post__pk=self.kwargs['post_pk'])
+        return qs
+
+    def perform_create(self, serializer):
+        # post=form.save(commit=False)
+        # post.author=self.request.user
+        # post.save
+        serializer.save(author=self.request.user)  # 작성자도 같이 저장해준다.
+        return super().perform_create(serializer)
