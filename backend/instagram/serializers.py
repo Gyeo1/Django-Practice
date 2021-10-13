@@ -1,3 +1,5 @@
+
+import re
 from django.db import models
 from django.db.models import fields
 from rest_framework import request, serializers
@@ -7,6 +9,17 @@ from django.contrib.auth import get_user_model
 
 # 작성자에 대한 정보를 보여주는 serializer.
 class AuthorSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField("avatar_url_field")  # 호출
+
+    def avatar_url_field(self, author):
+        if re.match(r"http?://", author.avatar_url):
+            return author.avatar_url
+
+        if 'request' in self.context:  # 여기서 http와 localhost:8000이후의 값을 받아온다.
+            scheme = self.context['request'].scheme  # https나 http를 얻어온다
+            host = self.context['request'].get_host()
+            return scheme+"://"+host+author.avatar_url
+
     class Meta:
         model = get_user_model()
         fields = ["username", "name", "avatar_url"]
@@ -36,4 +49,4 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ["author", "message", "id", "created_at"]

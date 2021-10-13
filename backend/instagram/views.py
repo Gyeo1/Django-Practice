@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 # Create your views here.
 
 
@@ -59,6 +60,11 @@ class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+    def get_serializer_context(self):  # serializer의 context
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
+
     def get_queryset(self):
         qs = super().get_queryset()
         # kwarg로 url에서 캡쳐된 값을 가져올 수 있다.
@@ -70,5 +76,6 @@ class CommentViewSet(ModelViewSet):
         # post=form.save(commit=False)
         # post.author=self.request.user
         # post.save
-        serializer.save(author=self.request.user)  # 작성자도 같이 저장해준다.
+        post = get_object_or_404(Post, pk=self.kwargs["post_pk"])
+        serializer.save(author=self.request.user, post=post)  # 작성자도 같이 저장해준다.
         return super().perform_create(serializer)
