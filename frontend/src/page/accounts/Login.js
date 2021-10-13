@@ -6,13 +6,14 @@ import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능, CustomHook이다.
 import LoginRequiredRouter from "../../utils/LoginRequiredRouter";
 import { parseErrorMessages } from "../../utils/forms";
+// import { SaveUserInfo } from "../../utils/UpdateJWT";
+
 function Login() {
   localStorage.removeItem("jwtToken");
   const [jwtToken, setJwtToken] = useLocalStorage("jwtToken", "");
   //디폴트로 빈 공백 주고 키는 jwtToken, JWT 토큰을 Localstorage에 저장
   //CustomHook을 사용해 원하는 변수의 값을 LocalStorage에 저장하는게 핵심이다.
   //다른 방법으로는 useEffect를 활용하는 방법이 있다.
-
   const history = useHistory();
   const [fieldErrors, setFieldErrors] = useState({});
   const location = useLocation(); //useLoacte로 어느 경로를 통해서 왔는지 확인 가능하다
@@ -23,7 +24,6 @@ function Login() {
   const onFinish = (values) => {
     async function fn() {
       const { username, password } = values;
-
       setFieldErrors({}); //초기화
       const data = { username, password };
 
