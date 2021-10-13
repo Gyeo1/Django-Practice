@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { Card, Avatar, Comment, Tooltip } from "antd";
+import { Card, Avatar, Tooltip } from "antd";
 import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
-import moment from "moment";
+
 import CommentList from "./CommentList";
 
 function Post({ post, handleLike }) {
@@ -29,12 +28,7 @@ function Post({ post, handleLike }) {
           avatar={
             <Avatar
               size="large"
-              icon={
-                <img
-                  src={`http://localhost:8000` + avatar_url}
-                  alt={username}
-                />
-              }
+              icon={<img src={avatar_url} alt={username} />}
             />
           }
           title={location}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom"; //
-import Axios from "axios";
+import { axiosInstance } from "../../api";
 import { Card, Alert, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import useLocalStorage from "../../utils/useLocalStorage"; //키와 초기값 지정가능, CustomHook이다.
@@ -28,10 +28,8 @@ function Login() {
       const data = { username, password };
 
       try {
-        const response = await Axios.post(
-          "http://localhost:8000/accounts/token/",
-          data
-        ); //토큰을 response로 받아오고 이를 아래 처럼 값을 따로 저장한다.
+        const response = await axiosInstance.post("/accounts/token/", data);
+        //토큰을 response로 받아오고 이를 아래 처럼 값을 따로 저장한다.
         const {
           data: { token: jwtToken },
         } = response; //jwtToken=response.data.token의 또다른 표현식이다

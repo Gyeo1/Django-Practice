@@ -2,11 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Card } from "antd";
 import "./SuggestionList.scss";
 import Suggestion from "./Suggestion";
-import Axios from "axios";
-import useAxios from "axios-hook"; //왜 안되는지 모르겠네;
+import { axiosInstance } from "../api";
+// import useAxios from "axios-hook"; //왜 안되는지 모르겠네;
 
 export default function SuggestionList({ style }) {
-  // const apiUrl = "http://localhost:8000/accounts/suggestions/";
   // const headers = {
   //   Authorization: ` JWT ${JSON.parse(localStorage.getItem("jwtToken"))}`,
   // }; //인증 헤더에 JWT 올리기
@@ -22,14 +21,12 @@ export default function SuggestionList({ style }) {
 
   useEffect(() => {
     async function fetchUserList() {
-      const apiUrl = "http://localhost:8000/accounts/suggestions/";
+      const apiUrl = "/accounts/suggestions/";
 
       try {
-        const { data } = await Axios.get(apiUrl, { headers });
+        const { data } = await axiosInstance.get(apiUrl, { headers });
         setUserList(data);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     fetchUserList();
   }, []);
@@ -49,11 +46,8 @@ export default function SuggestionList({ style }) {
     //     } else return user;
     //   });
     // });
-    Axios.post(
-      "http://localhost:8000/accounts/follow/",
-      { username },
-      { headers }
-    )
+    axiosInstance
+      .post("/accounts/follow/", { username }, { headers })
       .then((response) => {
         setUserList_2((prevUserList) => {
           return prevUserList.map((user) =>

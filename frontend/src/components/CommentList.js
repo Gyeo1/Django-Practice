@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { Comment, Avatar, Tooltip, Input, Button } from "antd";
-import moment from "moment";
-
+// import Axios from "axios";
+import { axiosInstance } from "../api";
+import { Input, Button } from "antd";
+import Comment from "./Comment";
 export default function CommentList({ post }) {
   const [commentList, setCommentList] = useState([]);
-  const apiURL = `http://localhost:8000/api/post/${post.id}/comments/`;
+
+  const apiURL = `/api/post/${post.id}/comments/`;
   const headers = {
     Authorization: ` JWT ${JSON.parse(localStorage.getItem("jwtToken"))}`,
   }; //인증 헤더에 JWT 올리기
   const [commnetContent, setCommnetContent] = useState("");
 
   useEffect(() => {
-    Axios.get(apiURL, { headers })
+    axiosInstance
+      .get(apiURL, { headers })
       .then((response) => {
         const { data } = response;
         console.log("loaded response:", response);
@@ -23,37 +25,32 @@ export default function CommentList({ post }) {
       }); //then은 성공 catch는 실패시
     console.log("Mounted");
   }, []);
-  const handleCommentSave = () => {
-    const apiURL = ``;
-    Axios.post(apiURL);
+  const handleCommentSave = async () => {
+    const apiURL = `/api/post/${post.id}/comments/`;
+
     console.group("코멘트 save 핸들링중");
-    console.log(commnetContent);
+    try {
+      const response = await axiosInstance.post(
+        apiURL,
+        { message: commnetContent },
+        { headers }
+      );
+      console.log(response);
+      setCommnetContent("");
+      window.location.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+
     console.groupEnd();
   };
   return (
     <div>
-      <Comment
-        author={"Gyeol"}
-        avatar={
-          <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-          />
-        }
-        content={
-          <p>
-            We supply a series of design principles, practical patterns and high
-            quality design resources (Sketch and Axure), to help people create
-            their product prototypes beautifully and efficiently.
-          </p>
-        }
-        atetime={
-          <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-            <span>{moment().fromNow()}</span>
-          </Tooltip>
-        }
-      />
-      current comment content:{commnetContent}
+      {commentList &&
+        commentList.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
+
       <Input.TextArea
         style={{ marginBottom: ".5em" }}
         value={commnetContent}

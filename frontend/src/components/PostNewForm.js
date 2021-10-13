@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Input, Upload, Modal, notification } from "antd";
 import { PlusOutlined, FrownOutlined } from "@ant-design/icons";
 import { getBase64FromFile } from "../utils/Base64";
-import Axios from "axios";
+import { axiosInstance } from "../api";
 import { parseErrorMessages } from "../utils/forms";
 import { useHistory } from "react-router-dom";
 export default function PostNewForm() {
@@ -46,11 +46,9 @@ export default function PostNewForm() {
       Authorization: ` JWT ${JSON.parse(localStorage.getItem("jwtToken"))}`,
     }; //인증 헤더에 JWT 올리기
     try {
-      const response = await Axios.post(
-        "http://localhost:8000/api/post/",
-        formData,
-        { headers }
-      );
+      const response = await axiosInstance.post("/api/post/", formData, {
+        headers,
+      });
       console.log("success response", response);
       history.push("/");
     } catch (error) {

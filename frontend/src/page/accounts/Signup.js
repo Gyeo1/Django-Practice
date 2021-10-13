@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"; //
-import Axios from "axios";
+import { axiosInstance } from "../../api";
 import { Alert, Form, Input } from "antd";
 
 function SignupNon() {
@@ -34,7 +34,8 @@ function SignupNon() {
     e.preventDefault();
     setErrors({}); //요청 보내기전 초기화 해주기
     //Axios 호출 함수
-    Axios.post("http://localhost:8000/accounts/signup/", inputs)
+    axiosInstance
+      .post("/accounts/signup/", inputs)
       .then((response) => {
         console.log("response:", response);
         history.push("accounts/login");
