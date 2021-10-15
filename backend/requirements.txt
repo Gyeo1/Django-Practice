@@ -1,10 +1,9 @@
 django~=3.0.0
-
-#common용
-
-#개발용
 django-debug-toolbar
-pillow
 djangorestframework
 djangorestframework-jwt
 django-pydenticon
+django-storages
+django-cors-headers
+pillow
+gunicorn
