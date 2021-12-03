@@ -1,0 +1,42 @@
+.app {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 1: 1: 1 비율의 3개의 colum을 만든다.
+  grid-template-areas:
+    "header header header"
+    "contents contents sidebar"
+    "footer footer footer";
+  //   background-color: lightyellow;
+  gap: 1rem; //rem뜻은 최상위 엘리먼트의 폰트 크기를 뜻함
+  width: 1024px;
+  //   border: 3px solid #333;
+  max-width: 100%; //화면 축소 확장시 따라간다
+  margin: 10px auto; //중앙으로 오게한다
+
+  .header {
+    display: flex; //한줄에 모든 내용 표시하도록 하는 방식
+    justify-content: space-between; //좌우로 나눠진다
+    align-items: center; //중앙에 있도록 한다
+    grid-area: header;
+
+    //아래는 header에 있는 다른 div에 css 입히기용도
+    .page-title {
+    }
+    .search {
+    }
+    .topnav {
+    }
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .contents {
+    grid-area: contents;
+  }
+
+  .footer {
+    grid-area: footer;
+    text-align: center; //justify-self: center와 같다
+  }
+}
