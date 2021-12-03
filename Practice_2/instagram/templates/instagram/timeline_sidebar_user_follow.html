@@ -1,0 +1,16 @@
+
+<div class="d-flex bd-highlight mb-3">
+  <div class="p-2 bd-highlight">
+    <img src="{{suggested_user.avatar_url}}" style="width:48px; height:48px;" class="rounded-circle" />
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="{% url 'instagram:user_page' suggested_user.username %}"> 
+    {#인스타그램의 user page로 가는데 오류?#}
+        {{suggested_user.username}}
+    </a>
+  </div>
+  <div class="ms-auto p-2 bd-highlight">
+    <a href="{% url 'user_follow' suggested_user.username %}">Follow</a>
+    {% comment %} <a href="{% url 'user_unfollow' suggested_user.username %}">UnFollow</a> {% endcomment %}
+  </div>
+</div>

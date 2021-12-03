@@ -1,0 +1,27 @@
+{% extends 'instagram/layout.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 mb-3">
+            Hello Instagram
+            <hr/>
+            <a href="{% url 'instagram:post_new' %}" class="btn btn-primary"> 새 포스팅 작성 </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+        {% for post in post_list %}
+            <div class="mb-3">
+            {% include 'instagram/_post_card.html' %}
+            </div>
+        {% endfor %}
+            <hr/>
+                {{user.following_set.all}}
+        </div>
+        {% comment %} 로그인 유저에 대한 내용 가져오기 By include{% endcomment %}
+        <div class="col-sm-4">     
+            {% include "instagram/timeline_sidebar.html" %}       
+        </div>
+    </div>
+</div>
+{% endblock content %}

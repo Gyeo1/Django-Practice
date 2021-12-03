@@ -1,0 +1,30 @@
+{% load bootstrap4 %}
+
+<div class="card">
+  
+  {% if form_title %}
+        <div class="card-header">
+        {{form_title}}
+        </div>
+  {% endif %}
+    
+
+  <div class="card-body">
+   {% if form %} {% comment %} form 객체가 있는경우는 아래 form을 가져온다 {% endcomment %}
+      <form action="" method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-primary mt-3" >
+             {{submit_label|default:"Submit"}}
+          </button>
+        {% endbuttons %}
+            </form>
+  {% else %}
+    <div class="alert alert-danger">
+      form 객체를 지정해 주세요
+    </div>
+  {% endif %}
+   
+  </div>
+</div>
